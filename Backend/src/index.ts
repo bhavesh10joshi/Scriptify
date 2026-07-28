@@ -11,7 +11,7 @@ App.use(cors());
 
 // Connecting various express api routers to one single express server
 App.use("/Scriptify/Api/User" , UserRouter);
-App.use("/Scriptify/Api/Product/History" , ProductHistoryRouter);
+App.use("/Scriptify/Api/Product" , ProductHistoryRouter);
 App.use("/Scriptify/Api/Product/Content" , ProductContentRouter);
 
 

@@ -10,7 +10,7 @@ const UserSchema = new Schema({
 
 // Database Schema for the storing the product related information
 const ProductSchema = new Schema({
-    userId : {type : ObjectId , required : true , unique : true} , 
+    userId : {type : ObjectId , required : true} , 
     name : {type : String , required : true} , 
     category : {type : String , required : true} , 
     brandName : {type : String , required : true} , 
@@ -21,7 +21,8 @@ const ProductSchema = new Schema({
     shortDescription : {type : String } ,
     keySellingPoints : {type : String } ,
     seoKeywords : {type : String } , 
-    productTagline : { type : String } 
+    productTagline : { type : String } ,
+    createdDate : {type : String}
 });   
 
 // Exporting the Database Schema models
