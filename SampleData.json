@@ -1,0 +1,23 @@
+[
+  {
+    "productName": "PulseFit Pro Smartwatch",
+    "productCategory": "Wearable Technology & Fitness",
+    "brandName": "VeloTech",
+    "keyFeatures": "Heart rate & SpO2 tracking, 14-day battery life, AMOLED touch display, GPS tracking, 50m water resistance, custom sleep analysis",
+    "targetAudience": "Fitness enthusiasts, runners, busy professionals, and tech-savvy health trackers"
+  },
+  {
+    "productName": "HydraGlow Hyaluronic Acid Serum",
+    "productCategory": "Skincare & Beauty",
+    "brandName": "NaturaBotanica",
+    "keyFeatures": "2% pure hyaluronic acid, infused with Vitamin B5, 100% vegan & cruelty-free, non-greasy fast-absorbing formula, fragrance-free",
+    "targetAudience": "People with dry or aging skin, skincare enthusiasts, and individuals looking for daily hydration solutions"
+  },
+  {
+    "productName": "EcoChill Stainless Steel Tumbler",
+    "productCategory": "Kitchenware & Drinkware",
+    "brandName": "TerraGear",
+    "keyFeatures": "Double-wall vacuum insulation, keeps drinks cold for 24 hours / hot for 12 hours, leak-proof straw lid, fits standard car cup holders, BPA-free",
+    "targetAudience": "Outdoor hikers, daily commuters, college students, and eco-conscious consumers"
+  }
+]
