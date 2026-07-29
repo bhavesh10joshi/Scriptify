@@ -13,8 +13,8 @@ dotenv.config({ path: envPath });
 const App = express();
 
 //Apply CORS before express.json() and route definitions
-App.use(cors());
 App.use(express.json());
+App.use(cors());
 
 // Connecting various express api routers to one single express server
 App.use("/Scriptify/Api/User", UserRouter);
