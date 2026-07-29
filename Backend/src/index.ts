@@ -1,5 +1,5 @@
-import express from "express"
-import cors from "cors"
+import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import UserRouter from "./Routers/User/UserRouter";
 import ProductContentRouter from "./Routers/Product/ProductContent/ProductRouter";
@@ -11,42 +11,52 @@ const envPath = path.resolve(process.cwd(), ".env");
 dotenv.config({ path: envPath });
 
 const App = express();
+
+// Define allowed origins array
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL.replace(/\/$/, "")] : [])
+];
+
+//Configure dynamic CORS middleware
+const corsOptions: cors.CorsOptions = {
+  origin: (origin, callback) => {
+    // Allow server-to-server requests or tools like Postman (where origin is undefined)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS Error: Origin ${origin} not allowed`));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"]
+};
+
+//Apply CORS before express.json() and route definitions
+App.use(cors(corsOptions));
 App.use(express.json());
-App.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
-  credentials: true
-}));
 
 // Connecting various express api routers to one single express server
-App.use("/Scriptify/Api/User" , UserRouter);
-App.use("/Scriptify/Api/Product" , ProductHistoryRouter);
-App.use("/Scriptify/Api/Product/Content" , ProductContentRouter);
+App.use("/Scriptify/Api/User", UserRouter);
+App.use("/Scriptify/Api/Product", ProductHistoryRouter);
+App.use("/Scriptify/Api/Product/Content", ProductContentRouter);
 
-// Connect to DB and start the server
+//Connect to DB and start the server
 main();
-async function main()
-{
-    try{
-        await mongoose.connect(process.env.MONGODB_URL as string);
-        console.log("Connection to the Database was successfull !");
+async function main() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URL as string);
+    console.log("Connection to the Database was successful!");
 
-        // process.env.VERCEL is automatically set to "1" by Vercel at runtime.
-        // We skip App.listen() there because Vercel is serverless and manages
-        // the HTTP layer itself. Locally we still need to listen on a port.
-        if (!process.env.VERCEL) {
-            App.listen(process.env.PORT || 5000);
-            console.log(`Server running on port ${process.env.PORT || 5000}`);
-        }
-
-        return;
+    if (!process.env.VERCEL) {
+      App.listen(process.env.PORT || 5000);
+      console.log(`Server running on port ${process.env.PORT || 5000}`);
     }
-    catch(e)
-    {
-        console.log("Connection with database was not successfull , Error recieved : " + e);
-        return;
-    }
+  } catch (e) {
+    console.log("Connection with database was not successful, Error received: " + e);
+  }
 }
 
-// Export the Express app as default so Vercel can use it as a serverless handler
 export default App;
-
