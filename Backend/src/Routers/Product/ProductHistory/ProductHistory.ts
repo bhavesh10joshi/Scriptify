@@ -10,13 +10,13 @@ ProductHistoryRouter.post("/History" , Middleware , async function(req:any , res
     const UserId:any = req.UserId;
 
     try{
-        const history:any = ProductModel.find({
+        const history:any = await ProductModel.find({
             userId : UserId
         });
         
         if(history)
         {
-            res.status(SuccessStatusCodes).json({
+            res.status(SuccessStatusCodes.Success).json({
                 Data : history 
             });
             return;
@@ -31,6 +31,7 @@ ProductHistoryRouter.post("/History" , Middleware , async function(req:any , res
     }
     catch(e)
     {
+        console.log(e);
         res.status(ServerErrors.InternalServerError).json({
             msg : "Internal Server Error Occurred !"
         });

@@ -1,12 +1,15 @@
 import { Router } from "express";
 import {z} from "zod" ;
 import jwt from "jsonwebtoken" ;
+import path from "path";
+import dotenv from "dotenv";
 import bcrypt from "bcrypt" 
 import { UserModel } from "../../Db/Db";
 import { UserObject } from "../../Validations/zodValidations";
 import { ServerErrors , SuccessStatusCodes , ClientErrorStatusCodes} from "../../StatusCodes/Codes";
 
-const JWT_TOKEN = "SomeRandomToken" ;
+const envPath = path.resolve(process.cwd(), ".env");
+dotenv.config({ path: envPath });
 
 const UserRouter = Router();
 

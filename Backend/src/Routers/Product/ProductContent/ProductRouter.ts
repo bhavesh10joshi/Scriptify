@@ -50,6 +50,7 @@ ProductContentRouter.post("/Generate/New" , Middleware , async function(req:any 
     }
     catch(e)
     {
+        console.log(e);
         res.status(ServerErrors.InternalServerError).json({
             msg : "Internal Server Error Occurred !"
         });

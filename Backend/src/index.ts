@@ -4,10 +4,18 @@ import mongoose from "mongoose";
 import UserRouter from "./Routers/User/UserRouter";
 import ProductContentRouter from "./Routers/Product/ProductContent/ProductRouter";
 import ProductHistoryRouter from "./Routers/Product/ProductHistory/ProductHistory";
+import dotenv from "dotenv";
+import path from "path";
+
+const envPath = path.resolve(process.cwd(), ".env");
+dotenv.config({ path: envPath });
 
 const App = express();
 App.use(express.json());
-App.use(cors());
+App.use(cors({
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  credentials: true
+}));
 
 // Connecting various express api routers to one single express server
 App.use("/Scriptify/Api/User" , UserRouter);
@@ -19,9 +27,9 @@ main();
 async function main()
 {
     try{
-        await mongoose.connect("");
+        await mongoose.connect(process.env.MONGODB_URL as string);
         console.log("Connection to the Database was successfull !");
-        App.listen(3000);
+        App.listen(process.env.PORT);
         return;
     }
     catch(e)
