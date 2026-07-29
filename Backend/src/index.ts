@@ -12,30 +12,8 @@ dotenv.config({ path: envPath });
 
 const App = express();
 
-// Define allowed origins array
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:3000",
-  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL.replace(/\/$/, "")] : [])
-];
-
-//Configure dynamic CORS middleware
-const corsOptions: cors.CorsOptions = {
-  origin: (origin, callback) => {
-    // Allow server-to-server requests or tools like Postman (where origin is undefined)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error(`CORS Error: Origin ${origin} not allowed`));
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"]
-};
-
 //Apply CORS before express.json() and route definitions
-App.use(cors(corsOptions));
+App.use(cors());
 App.use(express.json());
 
 // Connecting various express api routers to one single express server
